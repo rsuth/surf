@@ -1,5 +1,3 @@
-#!/usr/local/bin/python
-
 import sys
 import requests
 
@@ -7,7 +5,7 @@ def get_surf(spot_id):
     url = 'http://api.surfline.com/v1/forecasts/' + str(spot_id) + '?resources=analysis'
     request = requests.get(url)
     data = request.json()
-    return data['Analysis']['surfRange'][0]
+    return data
 
 spots = {
     'delmar': 4783,
@@ -19,7 +17,10 @@ spots = {
 }
 
 def main(argv):
-    print get_surf(spots[argv[1]])
+    print u'\U0001F30A'
+    data = get_surf(spots[argv[1]])
+    print data["Analysis"]["surfRange"][0]
+    print data["Analysis"]["generalCondition"][0]
 
 if __name__ == '__main__':
     main(sys.argv)
