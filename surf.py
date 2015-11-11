@@ -17,10 +17,20 @@ spots = {
 }
 
 def main(argv):
-    print u'\U0001F30A'
-    data = get_surf(spots[argv[1]])
-    print data["Analysis"]["surfRange"][0]
-    print data["Analysis"]["generalCondition"][0]
+    if (len(argv) != 2):
+        print "usage: surf <spot_name>"
+        print "available spots: "
+        for s in spots.keys():
+            print s
+    else:
+        spot = argv[1]
+        print u'\U0001F30A'
+        try:
+            data = get_surf(spots[spot])
+            print data["Analysis"]["surfRange"][0]
+            print data["Analysis"]["generalCondition"][0]
+        except KeyError:
+            print "No data for spot %s" % spot
 
 if __name__ == '__main__':
     main(sys.argv)
