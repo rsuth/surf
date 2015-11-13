@@ -1,10 +1,17 @@
-#!usr/bin/env python
+#!/usr/bin/env python
 
 import sys
 import requests
+import secret_key
 
 def get_surf(spot_id):
     url = 'http://api.surfline.com/v1/forecasts/' + str(spot_id) + '?resources=analysis'
+    request = requests.get(url)
+    data = request.json()
+    return data
+
+def get_tides():
+    url = 'http://api.wunderground.com/api/' + secret_key.SECRET_KEY + '/tide/q/CA/San_Diego.json'
     request = requests.get(url)
     data = request.json()
     return data
@@ -33,6 +40,9 @@ def main(argv):
             print data["Analysis"]["generalCondition"][0]
         except KeyError:
             print "No data for spot %s" % spot
+        tide = get_tides()
+        for i in range(0,5):
+            print tide["tide"]["tideSummary"][i]["data"]["type"] + ' ' + tide["tide"]["tideSummary"][i]["data"]["height"] + ' ' + tide["tide"]["tideSummary"][i]["date"]["hour"] + ':' + tide["tide"]["tideSummary"][i]["date"]["min"]
 
 if __name__ == '__main__':
     main(sys.argv)
