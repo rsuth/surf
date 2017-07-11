@@ -31,6 +31,15 @@ spots = {
 
 }
 
+sd_spots = {
+    'delmar': 4783,
+    'blacks': 4245,
+    'scripps': 4246,
+    'ob': 4253,
+    'sunsetcliffs': 4254,
+    'missionbeach': 4252,
+}
+
 def main(argv):
     if (len(argv) != 2):
         print "usage: surf <spot_name>"
@@ -42,13 +51,18 @@ def main(argv):
         print u'\U0001F30A'
         try:
             data = get_surf(spots[spot])
-            print data["Analysis"]["surfRange"][0]
-            print data["Analysis"]["generalCondition"][0]
+            try: 
+                print data["Analysis"]["surfRange"][0]
+                print data["Analysis"]["generalCondition"][0]
+            except IndexError:
+                print "Problem getting data for %s" % spot
         except KeyError:
-            print "No data for spot %s" % spot
-        tide = get_tides()
-        for i in range(0,5):
-            print tide["tide"]["tideSummary"][i]["data"]["type"] + ' ' + tide["tide"]["tideSummary"][i]["data"]["height"] + ' ' + tide["tide"]["tideSummary"][i]["date"]["hour"] + ':' + tide["tide"]["tideSummary"][i]["date"]["min"]
+            print "No data for spot: \"%s\"" % spot
+        if spot in sd_spots:
+            tide = get_tides()
+            print "\nTide data: \n"
+            for i in range(0,5):
+                print tide["tide"]["tideSummary"][i]["data"]["type"] + ' ' + tide["tide"]["tideSummary"][i]["data"]["height"] + ' ' + tide["tide"]["tideSummary"][i]["date"]["hour"] + ':' + tide["tide"]["tideSummary"][i]["date"]["min"]
 
 if __name__ == '__main__':
     main(sys.argv)
