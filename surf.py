@@ -22,7 +22,13 @@ spots = {
     'scripps': 4246,
     'ob': 4253,
     'sunsetcliffs': 4254,
-    'missionbeach': 4252
+    'missionbeach': 4252,
+    'uluwatu': 5557,
+    'lowertrestles': 4740,
+    'uppertrestles': 4738,
+    'pipeline': 4750,
+    'pavones': 5796
+
 }
 
 def main(argv):
